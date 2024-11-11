@@ -27,6 +27,11 @@ env:
   PYTHON_VERSION: "3.12"
   PYOXIDIZER_VERSION: "0.24.0"
 
+
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   python-artifacts:
     name: Build wheel and source distribution
