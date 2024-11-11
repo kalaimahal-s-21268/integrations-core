@@ -614,3 +614,5 @@ jobs:
         files: |-
           archives/*
           installers/*
+    permissions:
+      contents: write

@@ -200,6 +200,8 @@ jobs:
         name: target-${{ matrix.job.image }}
         path: output
 
+
+
   build-macos:
     name: Target macOS
     runs-on: macos-12
@@ -260,6 +262,9 @@ jobs:
       with:
         name: target-macos
         path: output
+
+    permissions:
+      packages: write
 
   publish:
     name: Publish artifacts
