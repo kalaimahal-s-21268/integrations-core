@@ -1,30 +1,44 @@
-name: Permissions Advisor
-
-
-# Use restritive workflow permissions. See https://datadoghq.atlassian.net/wiki/spaces/SECENG/pages/3913581900/GitHub+Workflow+Token+Permissions+GITHUB_TOKEN#Approach-1%3A-Bottom-up-%E2%A4%B4%EF%B8%8F
-permissions:
-  actions: read
-  contents: read
-  packages: read
-  
+# TODO DELETEME: Restore before merging
+name: Check App Token Permissions
 on:
   workflow_dispatch:
-    inputs:
-      name:
-        description: 'The name of the workflow file to analyze'
-        required: true
-        type: string
-      count:
-        description: 'How many last runs to analyze'
-        required: false
-        type: number
-        default: 10
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: read
 
 jobs:
-  advisor:
+  check_token_creation:
+    name: Check App Token Creation with Read Permissions
     runs-on: ubuntu-latest
+
     steps:
-    - uses: GitHubSecurityLab/actions-permissions/advisor@v1
-      with:
-        name: ${{ inputs.name }}
-        count: ${{ inputs.count }}
+      - name: Attempt to Create GitHub App Token
+        id: token-generator
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DD_AGENT_INTEGRATIONS_BOT_APP_ID }}
+          private-key: ${{ secrets.DD_AGENT_INTEGRATIONS_BOT_PRIVATE_KEY }}
+          repositories: integrations-core
+
+      - name: Check if Token Creation Succeeded
+        run: |
+          if [ "${{ steps.token-generator.outcome }}" == "failure" ]; then
+            echo "Token creation failed due to insufficient permissions."
+            exit 1
+          else
+            echo "Token created successfully with read permissions."
+          fi
+      - name: Create Test File
+        run: |
+          echo "This is a test file for checking artifact upload permissions." > test-file.txt
+
+
+      - name: Attempt to Upload Artifact with Read Permissions
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifact
+          path: ./test-file.txt
