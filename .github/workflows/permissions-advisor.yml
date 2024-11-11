@@ -15,6 +15,10 @@ jobs:
     name: Check App Token Creation with Read Permissions
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      packages: write
+
     steps:
       - name: Attempt to Create GitHub App Token
         id: token-generator
@@ -53,7 +57,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/test-app
-          key: ${{ runner.os }}-test-app-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-test-app
 
 
       - name: Check Cache Hit
@@ -70,17 +74,16 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/test-app
-          key: ${{ runner.os }}-test-app-${{ hashFiles('**/package-lock.json') }}
-          # Add a unique restore key to try writing a new cache if none exists.
+          key: ${{ runner.os }}-test-app
           restore-keys: |
             ${{ runner.os }}-test-app-
 
       - name: Check Cache Write Result
         run: |
           if [ "${{ steps.cache.outputs.cache-hit }}" = "true" ]; then
-            echo "❌ Unexpected: Cache write succeeded, indicating write permission."
+            echo "Cache write succeeded"
           else
-            echo "✅ Cache write failed as expected due to read-only permissions."
+            echo "Cache write failed"
           fi
       - uses: actions/checkout@v4
         with:
