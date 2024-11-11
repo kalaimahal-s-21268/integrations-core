@@ -27,6 +27,8 @@ defaults:
   run:
     shell: bash
 
+
+# Use restritive workflow permissions. See https://datadoghq.atlassian.net/wiki/spaces/SECENG/pages/3913581900/GitHub+Workflow+Token+Permissions+GITHUB_TOKEN#Approach-1%3A-Bottom-up-%E2%A4%B4%EF%B8%8F
 permissions:
   contents: read
   packages: read

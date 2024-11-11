@@ -27,7 +27,7 @@ env:
   PYTHON_VERSION: "3.12"
   PYOXIDIZER_VERSION: "0.24.0"
 
-
+# Use restritive workflow permissions. See https://datadoghq.atlassian.net/wiki/spaces/SECENG/pages/3913581900/GitHub+Workflow+Token+Permissions+GITHUB_TOKEN#Approach-1%3A-Bottom-up-%E2%A4%B4%EF%B8%8F
 permissions:
   contents: read
   packages: read
