@@ -19,6 +19,11 @@ on:
     # broke the docs job (pydantic incompatible with ddev's version) but we didn't find out until later.
     - 'datadog_checks_base/pyproject.toml'
 
+# Use restritive workflow permissions. See https://datadoghq.atlassian.net/wiki/spaces/SECENG/pages/3913581900/GitHub+Workflow+Token+Permissions+GITHUB_TOKEN#Approach-1%3A-Bottom-up-%E2%A4%B4%EF%B8%8F
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   build:
     runs-on: ubuntu-latest

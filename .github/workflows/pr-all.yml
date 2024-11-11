@@ -9,6 +9,12 @@ on:
     - datadog_checks_dev/datadog_checks/dev/*.py
     - ddev/src/**
     - "!agent_requirements.in"
+    - ./github/workflows/pr-all.yml
+
+# Use restritive workflow permissions. See https://datadoghq.atlassian.net/wiki/spaces/SECENG/pages/3913581900/GitHub+Workflow+Token+Permissions+GITHUB_TOKEN#Approach-1%3A-Bottom-up-%E2%A4%B4%EF%B8%8F
+permissions:
+  contents: read
+  packages: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.head_ref }}

@@ -1,0 +1,45 @@
+# DELETEME: Remove this  after testing
+
+name: Check App Token Permissions
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  check_token_creation:
+    name: Check App Token Creation with Read Permissions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Attempt to Create GitHub App Token
+        id: token-generator
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DD_AGENT_INTEGRATIONS_BOT_APP_ID }}
+          private-key: ${{ secrets.DD_AGENT_INTEGRATIONS_BOT_PRIVATE_KEY }}
+          repositories: integrations-core
+
+      - name: Check if Token Creation Succeeded
+        run: |
+          if [ "${{ steps.token-generator.outcome }}" == "failure" ]; then
+            echo "Token creation failed due to insufficient permissions."
+            exit 1
+          else
+            echo "Token created successfully with read permissions."
+          fi
+      - name: Create Test File
+        run: |
+          echo "This is a test file for checking artifact upload permissions." > test-file.txt
+
+
+      - name: Attempt to Upload Artifact with Read Permissions
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifact
+          path: ./test-file.txt

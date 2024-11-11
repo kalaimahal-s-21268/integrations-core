@@ -6,6 +6,11 @@ on:
       - master
     paths:
       - .in-toto/*.link
+      
+# Use restritive workflow permissions. See https://datadoghq.atlassian.net/wiki/spaces/SECENG/pages/3913581900/GitHub+Workflow+Token+Permissions+GITHUB_TOKEN#Approach-1%3A-Bottom-up-%E2%A4%B4%EF%B8%8F
+permissions:
+  contents: read
+  packages: read
 
 jobs:
   build:
@@ -38,5 +43,7 @@ jobs:
         git config user.name "release-hash-check"
         git config user.email "<>"
         git merge --no-commit --no-edit origin/$HEAD_BRANCH
-
     - run: python .github/workflows/release-hash-check.py ${{ steps.files.outputs.all }}
+    
+    permissions:
+      contents: write

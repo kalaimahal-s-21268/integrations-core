@@ -42,5 +42,3 @@ jobs:
 
             <%= body %>
           github_token: ${{ steps.token-generator.outputs.token }}
-    permissions:
-      contents: write
