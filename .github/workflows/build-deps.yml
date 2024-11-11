@@ -27,6 +27,10 @@ defaults:
   run:
     shell: bash
 
+permissions:
+  contents: read
+  packages: read
+  
 env:
   PYTHONUNBUFFERED: "1"
   PYTHON_VERSION: "3.12"
