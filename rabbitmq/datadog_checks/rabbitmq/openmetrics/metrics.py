@@ -321,12 +321,10 @@ _DETAILED_FAMILIES = {
         "rabbitmq_auth_attempts_succeeded_total",
         "rabbitmq_auth_attempts_failed_total",
     },
-    # NOTE: These names are not what's in the docs, instead they exclude the
-    # same aggergated metrics as the `auth_attempt_metrics` family.
     "auth_attempt_detailed_metrics": {
-        "rabbitmq_auth_attempts_total",
-        "rabbitmq_auth_attempts_succeeded_total",
-        "rabbitmq_auth_attempts_failed_total",
+        "rabbitmq_auth_attempts_detailed_total",
+        "rabbitmq_auth_attempts_detailed_succeeded_total",
+        "rabbitmq_auth_attempts_detailed_failed_total",
     },
     # Queue Metrics
     "queue_coarse_metrics": {
